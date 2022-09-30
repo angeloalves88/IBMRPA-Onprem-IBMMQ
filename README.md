@@ -213,3 +213,9 @@ Good Luck
 Caso precise consultar o log do IBM MQ ele fica neste caminho
 
  - C:\ProgramData\IBM\MQ\qmgrs\RPA!QM\errors\AMQERR01.LOG
+ 
+Material de Apoio:
+
+- Criar uma Queue Manager	https://www.ibm.com/docs/en/ibm-mq/9.2?topic=interface-creating-queue-manager-called-qm1
+- Configurando o IBM MQ		https://www.ibm.com/docs/en/rpa/21.0?topic=server-optional-configuring-mq
+
