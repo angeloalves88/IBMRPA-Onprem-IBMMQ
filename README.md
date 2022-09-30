@@ -32,9 +32,9 @@ IBM Message Queue - version 9.2.5
 - Cadastrar uma senha para este usuário
 - Adicionar ao grupo MQM
 
-> User name: UserMq
-
-> User password: ibmrpa2022
+|usuario|password|
+| -------- |-------- |
+|UserMQ|ibmrpa2022|
 
 
 ![image](https://user-images.githubusercontent.com/46223364/193288830-e1fee344-58f3-45bc-a8c3-db3287ac677d.png)
@@ -42,14 +42,14 @@ IBM Message Queue - version 9.2.5
 
 ## Instalar o IBM MQ
 
-> No Passaport Advantage junto com o IBM RPA tem o arquivo do IBM MQ para fazer a instalação
+No Passaport Advantage junto com o IBM RPA tem o arquivo do IBM MQ para fazer a instalação
 Realizar a extação dos arquivos e realizar a instalação next, next, ...
 
-> Caso durante a instalação peça uma conta de dominio, informe que 'Não'
+Caso durante a instalação peça uma conta de dominio, informe que 'Não'
 
 Configurar o IBM MQ [PROMPT DO WINDOWS]
 
-> * Este script está diferente do documentado
+> Este script está diferente do documentado
 
 ```
 
@@ -87,7 +87,7 @@ Configurar o IBM MQ [PROMPT DO WINDOWS]
 	DEFINE LISTENER('RPA.LISTENER.TCP') TRPTYPE(TCP) PORT(1515) CONTROL(QMGR) REPLACE
 	START LISTENER('RPA.LISTENER.TCP') IGNSTATE(YES)
   
-  exit
+  	exit
 ```
 
 Atribuindo os acessos [PROMPT DO WINDOWS]
@@ -117,7 +117,7 @@ Testando com o Put [PROMPT DO WINDOWS]
 
 	amqsputc RPA.QUEUE.1 RPA.QM
 	Informar a senha do usuario: ibmrpa2022
-  Inserir as mensagens p colocar na fila
+  	Inserir as mensagens p colocar na fila
   
 ```
 
@@ -126,23 +126,20 @@ Testando com o Put [PROMPT DO WINDOWS]
 
 ## Informações do MQ 
 
-> Como ficou as informações do nosso MQ
+Como ficou as informações do nosso MQ
 
-- Address: srv-ibmrpa-03.ibmrpa.intra (full name/FSDN)
+|Key|Value|
+| -------- |-------- |
+|Address|srv-ibmrpa-03.ibmrpa.intra|
+|Port|1515|
+|Queue Manager|RPA.QM|
+|User Id|UserMq|
+|Password|ibmrpa2022|
 
-- Port: 1515
-
-- Queue Manager: RPA.QM
-
-- Channel: RPA.CHANNEL
-
-- User Id: UserMq
-
-- Password: ibmrpa2022
 
 ## Instalando o IBM RPA On-premises
 
-> Realizar a instalação normalmente seguindo a documentação  
+Realizar a instalação normalmente seguindo a documentação  
 
 > https://www.ibm.com/docs/en/rpa/21.0?topic=server-install-by-using-installer
 
@@ -202,7 +199,7 @@ Script Model
 
 Visualização do IBM MQ Explorer
 
-> Podemos ver as filas criadas
+> Podemos visualizar as filas criadas
 
 ![image](https://user-images.githubusercontent.com/46223364/193295168-0c367cce-0837-4abb-9954-4193d50bc166.png)
 
