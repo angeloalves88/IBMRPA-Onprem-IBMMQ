@@ -19,6 +19,8 @@ IBM Message Queue - version 9.2.5
 
 :small_blue_diamond: [Instalar o IBM MQ](#instalar-o-ibm-mq)
 
+:small_blue_diamond: [Configurar o IBM MQ](#configurar-o-ibm-mq)
+
 :small_blue_diamond: [Informações do MQ](#informações-do-mq)
 
 :small_blue_diamond: [Instalando o IBM RPA On-premises](#instalando-o-ibm-rpa-on-premises)
@@ -61,40 +63,43 @@ Se ocorreu tudo certo com o usuário, no final será mostrado está mensagem.
 ![image](https://user-images.githubusercontent.com/46223364/194894688-f5884c2e-4a16-4cc0-8516-b92c761e022d.png)
 
 
-Configurar o IBM MQ [PROMPT DO WINDOWS]
+## Configurar o IBM MQ
+[PROMPT DO WINDOWS]
+
+A porta padrão do IBM MQ é a 1414 no tutorial iremos utlizar a 1515.
 
 > **Este script está diferente do documentado
 
 ```
 
-* Create o Queue Manager = QM
+* Create o Queue Manager (QM)
 	crtmqm RPA.QM
 
 * Iniciar o QM
 	STRMQM RPA.QM
 	
-* Acessar o RUNMQSC do QM
+* Acessar o Prompt do IBM MQ através do RUNMQSC
 	RUNMQSC RPA.QM
 
 * Parar os Listener
 	STOP LISTENER('SYSTEM.DEFAULT.LISTENER.TCP') IGNSTATE(YES)
 
-* Developer queues (tests)
+* Test Queue
 	DEFINE QLOCAL('RPA.QUEUE.1') REPLACE
 	DEFINE QLOCAL('RPA.DEAD.LETTER.QUEUE') REPLACE
 
 * Use a different dead letter queue, for undeliverable messages
 	ALTER QMGR DEADQ('RPA.DEAD.LETTER.QUEUE')
 
-* Developer connection authentication no WINDOWS
+* Configurações de authentication
 	DEFINE AUTHINFO('RPA.AUTHINFO') AUTHTYPE(IDPWOS) CHCKCLNT(REQDADM) CHCKLOCL(OPTIONAL) ADOPTCTX(YES) REPLACE
 	ALTER QMGR CONNAUTH('RPA.AUTHINFO')
 	REFRESH SECURITY(*) TYPE(CONNAUTH)
 
-* Criar o channels
+* Create the channel
 	DEFINE CHANNEL('RPA.CHANNEL') CHLTYPE(SVRCONN) MCAUSER('UserMq') REPLACE
 
-* Esta linha é diferente das instruções do RPA
+* Configuração do método de authenticaçao do Canal
 	SET CHLAUTH('RPA.CHANNEL') TYPE(ADDRESSMAP) ADDRESS('*') USERSRC(CHANNEL) CHCKCLNT(REQUIRED) DESCR('Allows connection via APP channel') ACTION(REPLACE)
 	ALTER QMGR CHLAUTH(DISABLED)
 
@@ -108,7 +113,7 @@ Configurar o IBM MQ [PROMPT DO WINDOWS]
 Atribuindo os acessos [PROMPT DO WINDOWS]
 
 ```
-* Configura-se acesso ao grupo
+* Configurar a permissão do usuario
 	setmqaut -m RPA.QM -t qmgr -p UserMq +connect +inq
 	setmqaut -m RPA.QM -n RPA.** -t queue -p UserMq +put +get +browse +inq +chg
 	setmqaut -m RPA.QM -n SYSTEM.DEFAULT.** -t queue -p UserMq +dsp +chg
@@ -120,7 +125,7 @@ Atribuindo os acessos [PROMPT DO WINDOWS]
 	STRMQM RPA.QM
 ```
 
-Testando com o Put [PROMPT DO WINDOWS] (caso esteja utilizando outro usuário, trocar nos próximos comandos)
+Testar a fila com o Put [PROMPT DO WINDOWS] 
 
 ```
 
@@ -162,13 +167,13 @@ Na tela de escolher o Provedor de Mensagem escolhar o IBM Message Queue
 
 ![image](https://user-images.githubusercontent.com/46223364/193291905-ec9a072c-fa9f-4068-ae7d-e463821b0af2.png)
 
-Preencha com os dados do nosso ambiente e finalize a instalação
+Preencha com os dados do ambiente e finalize a instalação
 
 ![image](https://user-images.githubusercontent.com/46223364/193291774-f96730ac-8f38-476d-b749-cf28247fde55.png)
 
-> A instalação valida o acesso ao MQ, se passar está tudo Ok
+> A instalação valida a conexão com MQ, caso não apresenta nenhuma mensagem está tudo Ok
 
-## Teste acesso com o comando IBM MQ
+## Testar o acesso utilizando o comando Connectar IBM MQ
 
 ```
   defVar --name success --type Boolean
@@ -177,7 +182,7 @@ Preencha com os dados do nosso ambiente e finalize a instalação
   defVar --name quantity --type Numeric
   defVar --name item --type QueueMessage
   defVar --name successConnection --type Boolean
-  connectSystemMQ successConnection=success conMQ=value
+  connectIbmMQ --queueprovider "MQ-Local" --fromconfiguration  successConnection=success conMQ=value
   getQueue --connection ${conMQ} --name "RPA.QUEUE.1" success=success queue1=value
   enqueue --collection "${queue1}" --isserver  --priority 1 --value "test-123"
   count --collection "${queue1}" quantity=value
@@ -187,8 +192,7 @@ Preencha com os dados do nosso ambiente e finalize a instalação
   count --collection "${queue1}" quantity=value
   return
 ```
-
-![image](https://user-images.githubusercontent.com/46223364/193293476-c19a652c-06d4-4fbd-80e1-ce45e42b5bbd.png)
+![image](https://user-images.githubusercontent.com/46223364/194963124-c6e5d8d4-4ead-4b08-ab23-fbd1e0e6c849.png)
 
 
 ## Teste o acesso utilizando o Provedor Sistêmico do IBM RPA
