@@ -54,8 +54,8 @@ Realizar a extação dos arquivos e iniciar a instalação Tipica do IBM MQ (nex
 
 No final da Instalação será carregado outra janela "Prepare IBM MQ Wizard" para configurar a conta de acesso ao IBM MQ. Neste Wizard será solicitado a escolha de uma conta local ou de LDAP.
 
-	- Informe 'Não' (usuario local, nosso cenário)
-	- Informe 'Sim' para uma conta do LDAP, e será solicitado o dominio, usuário e senha, para ser configurado no serviço do IBM MQ
+- Informe 'Não' (usuario local, nosso cenário)
+- Informe 'Sim' para uma conta do LDAP, e será solicitado o dominio, usuário e senha, para ser configurado no serviço do IBM MQ
 
 Se ocorreu tudo certo com o usuário, no final será mostrado está mensagem.
 ![image](https://user-images.githubusercontent.com/46223364/194894688-f5884c2e-4a16-4cc0-8516-b92c761e022d.png)
