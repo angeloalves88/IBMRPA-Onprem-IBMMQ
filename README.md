@@ -6,7 +6,7 @@ IBM Robotic Process Automation - version 21.0.5
 
 IBM Message Queue - version 9.2.5
 
-<h1>Configuração realiza em uma VM Classic no IBM Cloud</h1> 
+<h1>Configuração realizada em uma VM Classic do IBM Cloud</h1> 
 
 <p align="center">
    <img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=RED&style=for-the-badge"/>
@@ -25,7 +25,7 @@ IBM Message Queue - version 9.2.5
 
 :small_blue_diamond: [Instalando o IBM RPA On-premises](#instalando-o-ibm-rpa-on-premises)
 
-:small_blue_diamond: [Teste acesso com o comando IBM MQ](#teste-acesso-com-o-comando-ibm-mq)
+:small_blue_diamond: [Testar acesso com o comando Connectar IBM MQ](#testar-acesso-com-o-comando-ibm-mq)
 
 
 ## Pré-Requisitos
