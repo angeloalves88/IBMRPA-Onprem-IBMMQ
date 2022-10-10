@@ -25,7 +25,7 @@ IBM Message Queue - version 9.2.5
 
 :small_blue_diamond: [Instalando o IBM RPA On-premises](#instalando-o-ibm-rpa-on-premises)
 
-:small_blue_diamond: [Testar acesso com o comando Connectar IBM MQ](#testar-acesso-com-o-comando-ibm-mq)
+:small_blue_diamond: [Testar o acesso utilizando o comando Connectar IBM MQ](#testar-o-acesso-utilizando-o-comando-connectar-ibm-mq)
 
 
 ## Pré-Requisitos
