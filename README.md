@@ -28,9 +28,14 @@ IBM Message Queue - version 9.2.5
 
 ## Pré-Requisitos
 
-- Criar um usuário Local no Windows
-- Cadastrar uma senha para este usuário
-- Adicionar ao grupo MQM
+- Definir o usuário de acesso ao MQ
+	- Criar um usuário Local no Windows
+		- Cadastrar uma senha para este usuário
+		- Adicionar ao grupo MQM
+	- Usuario LDAP
+		- Seguir este procedimento: https://www.ibm.com/docs/en/ibm-mq/9.2?topic=mq-creating-setting-up-windows-domain-accounts
+		
+- Neste tutorial iremos utilizar uma conta local
 
 |usuario|password|
 | -------- |-------- |
@@ -42,14 +47,17 @@ IBM Message Queue - version 9.2.5
 
 ## Instalar o IBM MQ
 
-No Passaport Advantage junto com o IBM RPA tem o arquivo do IBM MQ para fazer a instalação
+Quando pesquisar o IBM RPA no Passaport Advantage , terá o arquivo do IBM MQ para ser utilizado com o IBM RPA.
+
 Realizar a extação dos arquivos e realizar a instalação next, next, ...
 
-Caso durante a instalação peça uma conta de dominio, informe que 'Não'
+Caso durante a instalação peça uma conta de dominio:
+	- Informe 'Não' (usuario local, nosso cenário)
+	- Informe 'Sim' para uma conta do LDAP, e será solicitado o dominio, usuário e senha, para ser configurado no serviço do IBM MQ
 
 Configurar o IBM MQ [PROMPT DO WINDOWS]
 
-> Este script está diferente do documentado
+> **Este script está diferente do documentado
 
 ```
 
@@ -65,7 +73,7 @@ Configurar o IBM MQ [PROMPT DO WINDOWS]
 * Parar os Listener
 	STOP LISTENER('SYSTEM.DEFAULT.LISTENER.TCP') IGNSTATE(YES)
 
-* Developer queues (testes)
+* Developer queues (tests)
 	DEFINE QLOCAL('RPA.QUEUE.1') REPLACE
 	DEFINE QLOCAL('RPA.DEAD.LETTER.QUEUE') REPLACE
 
@@ -77,11 +85,12 @@ Configurar o IBM MQ [PROMPT DO WINDOWS]
 	ALTER QMGR CONNAUTH('RPA.AUTHINFO')
 	REFRESH SECURITY(*) TYPE(CONNAUTH)
 
-* Criar o channels
+* Criar o channels, caso esteja utilizando outro usuário, trocar no próximo comando
 	DEFINE CHANNEL('RPA.CHANNEL') CHLTYPE(SVRCONN) MCAUSER('UserMq') REPLACE
 
 * Esta linha é diferente das instruções do RPA
 	SET CHLAUTH('RPA.CHANNEL') TYPE(ADDRESSMAP) ADDRESS('*') USERSRC(CHANNEL) CHCKCLNT(REQUIRED) DESCR('Allows connection via APP channel') ACTION(REPLACE)
+	ALTER QMGR CHLAUTH(DISABLED)
 
 * Ativando o listener na porta 1515
 	DEFINE LISTENER('RPA.LISTENER.TCP') TRPTYPE(TCP) PORT(1515) CONTROL(QMGR) REPLACE
@@ -93,7 +102,7 @@ Configurar o IBM MQ [PROMPT DO WINDOWS]
 Atribuindo os acessos [PROMPT DO WINDOWS]
 
 ```
-* Configura-se acesso ao grupo
+* Configura-se acesso ao grupo, caso esteja utilizando outro usuário, trocar nos próximos comandos.
 	setmqaut -m RPA.QM -t qmgr -p UserMq +connect +inq
 	setmqaut -m RPA.QM -n RPA.** -t queue -p UserMq +put +get +browse +inq +chg
 	setmqaut -m RPA.QM -n SYSTEM.DEFAULT.** -t queue -p UserMq +dsp +chg
@@ -105,7 +114,7 @@ Atribuindo os acessos [PROMPT DO WINDOWS]
 	STRMQM RPA.QM
 ```
 
-Testando com o Put [PROMPT DO WINDOWS]
+Testando com o Put [PROMPT DO WINDOWS] (caso esteja utilizando outro usuário, trocar nos próximos comandos)
 
 ```
 
