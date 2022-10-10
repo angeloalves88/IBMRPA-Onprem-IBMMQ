@@ -1,4 +1,4 @@
-# IBM RPA Onpremises + IBM MQ
+# Instalação do IBM RPA Onpremises com o provedor de fila IBM MQ
 
 Install IBM RPA Onpremises using the IBM MQ queue provider
 
@@ -29,15 +29,16 @@ IBM Message Queue - version 9.2.5
 ## Pré-Requisitos
 
 - Definir o usuário de acesso ao MQ
-	- Criar um usuário Local no Windows
-		- Cadastrar uma senha para este usuário
+	- Usuário Local no Windows
+		- Criar um novo usuario
 		- Adicionar ao grupo MQM
 	- Usuario LDAP
 		- Seguir este procedimento: https://www.ibm.com/docs/en/ibm-mq/9.2?topic=mq-creating-setting-up-windows-domain-accounts
+		- Trocar todo 'UserMQ' pelo seu usuário do LDAP
 		
-- Neste tutorial iremos utilizar uma conta local
+- Neste tutorial iremos utilizar uma conta local, caso utilize uma conta LDAP, informe sua conta no local do UserMQ
 
-|usuario|password|
+|USERNAME|PASSWORD|
 | -------- |-------- |
 |UserMQ|ibmrpa2022|
 
@@ -47,13 +48,18 @@ IBM Message Queue - version 9.2.5
 
 ## Instalar o IBM MQ
 
-Quando pesquisar o IBM RPA no Passaport Advantage , terá o arquivo do IBM MQ para ser utilizado com o IBM RPA.
+Quando pesquisar o IBM Robotic Process Automation no Passaport Advantage, terá o arquivo do IBM MQ para Windows disponível para download.
 
-Realizar a extação dos arquivos e realizar a instalação next, next, ...
+Realizar a extação dos arquivos e iniciar a instalação Tipica do IBM MQ (next, next, and finish). 
 
-Caso durante a instalação peça uma conta de dominio:
+No final da Instalação será carregado outra janela "Prepare IBM MQ Wizard" para configurar a conta de acesso ao IBM MQ. Neste Wizard será solicitado a escolha de uma conta local ou de LDAP.
+
 	- Informe 'Não' (usuario local, nosso cenário)
 	- Informe 'Sim' para uma conta do LDAP, e será solicitado o dominio, usuário e senha, para ser configurado no serviço do IBM MQ
+
+Se ocorreu tudo certo com o usuário, no final será mostrado está mensagem.
+![image](https://user-images.githubusercontent.com/46223364/194894688-f5884c2e-4a16-4cc0-8516-b92c761e022d.png)
+
 
 Configurar o IBM MQ [PROMPT DO WINDOWS]
 
@@ -85,7 +91,7 @@ Configurar o IBM MQ [PROMPT DO WINDOWS]
 	ALTER QMGR CONNAUTH('RPA.AUTHINFO')
 	REFRESH SECURITY(*) TYPE(CONNAUTH)
 
-* Criar o channels, caso esteja utilizando outro usuário, trocar no próximo comando
+* Criar o channels
 	DEFINE CHANNEL('RPA.CHANNEL') CHLTYPE(SVRCONN) MCAUSER('UserMq') REPLACE
 
 * Esta linha é diferente das instruções do RPA
@@ -102,7 +108,7 @@ Configurar o IBM MQ [PROMPT DO WINDOWS]
 Atribuindo os acessos [PROMPT DO WINDOWS]
 
 ```
-* Configura-se acesso ao grupo, caso esteja utilizando outro usuário, trocar nos próximos comandos.
+* Configura-se acesso ao grupo
 	setmqaut -m RPA.QM -t qmgr -p UserMq +connect +inq
 	setmqaut -m RPA.QM -n RPA.** -t queue -p UserMq +put +get +browse +inq +chg
 	setmqaut -m RPA.QM -n SYSTEM.DEFAULT.** -t queue -p UserMq +dsp +chg
