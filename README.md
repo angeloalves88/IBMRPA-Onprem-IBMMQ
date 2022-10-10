@@ -186,18 +186,14 @@ Preencha com os dados do ambiente e finalize a instalação
   getQueue --connection ${conMQ} --name "RPA.QUEUE.1" success=success queue1=value
   enqueue --collection "${queue1}" --isserver  --priority 1 --value "test-123"
   count --collection "${queue1}" quantity=value
-  peek --collection "${queue1}" success=success item=value
-  count --collection "${queue1}" quantity=value
-  dequeue --collection "${queue1}" success=success item=value
-  count --collection "${queue1}" quantity=value
   return
 ```
 ![image](https://user-images.githubusercontent.com/46223364/194963124-c6e5d8d4-4ead-4b08-ab23-fbd1e0e6c849.png)
 
 
-## Teste o acesso utilizando o Provedor Sistêmico do IBM RPA
+## Testar o acesso utilizando o Provedor Sistêmico do IBM RPA
 
-Criar a fila no Control center
+Criar uma fila no Control center
 ![image](https://user-images.githubusercontent.com/46223364/193294275-dceea3af-1702-498d-9e08-46085261be2a.png)
 
 Script Model
@@ -229,7 +225,7 @@ Good Luck
 
 ... 
 
-Caso precise consultar o log do IBM MQ ele fica neste caminho
+Caso precise consultar o log do IBM MQ, consulte o arquivo abaixo
 
  - C:\ProgramData\IBM\MQ\qmgrs\RPA!QM\errors\AMQERR01.LOG
  
