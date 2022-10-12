@@ -153,6 +153,7 @@ Como ficou as informações do nosso MQ
 |Address|srv-ibmrpa-03.ibmrpa.intra|
 |Port|1515|
 |Queue Manager|RPA.QM|
+|Channel|RPA.CHANNEL|
 |User Id|UserMq|
 |Password|ibmrpa2022|
 
