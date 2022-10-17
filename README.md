@@ -1,12 +1,10 @@
-# Instalação do IBM RPA Onpremises com o provedor de fila IBM MQ
-
-Install IBM RPA Onpremises using the IBM MQ queue provider
+# Instalação do IBM RPA Onpremises utilizando o provedor de fila IBM MQ queue provider
 
 IBM Robotic Process Automation - version 21.0.5
 
 IBM Message Queue - version 9.2.5
 
-<h1>Configuração realizada em uma VM Classic do IBM Cloud</h1> 
+<h3>Configuração realizada em uma VM Classic do IBM Cloud</h3> 
 
 <p align="center">
    <img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=RED&style=for-the-badge"/>
