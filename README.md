@@ -1,42 +1,41 @@
-# Instalação do IBM RPA Onpremises utilizando o provedor de fila IBM MQ
+# Installing IBM RPA On-premises using the IBM MQ queue provider
 
 IBM Robotic Process Automation - version 21.0.5
 
 IBM Message Queue - version 9.2.5
 
-Configuração realizada em uma VM Classic do IBM Cloud
+Configuration performed on an IBM Cloud Classic VM
 
 <p align="center">
-   <img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=RED&style=for-the-badge"/>
+   <img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DEVELOPMENT&color=RED&style=for-the-badge"/>
  <!--  <img src="http://img.shields.io/static/v1?label=STATUS&message=CONCLUIDO&color=GREEN&style=for-the-badge"/>-->
 </p>
 
-### Tópicos 
+### Topics 
 
-:small_blue_diamond: [Pré-Requisitos](#pré-requisitos)
+:small_blue_diamond: [Prerequisites](#prerequisites)
 
-:small_blue_diamond: [Instalar o IBM MQ](#instalar-o-ibm-mq)
+:small_blue_diamond: [Install IBM MQ](#install-ibm-mq)
 
-:small_blue_diamond: [Configurar o IBM MQ](#configurar-o-ibm-mq)
+:small_blue_diamond: [Configure IBM MQ](#configure-ibm-mq)
 
-:small_blue_diamond: [Informações do MQ](#informações-do-mq)
+:small_blue_diamond: [MQ environment information](#mq-environment-information)
 
-:small_blue_diamond: [Instalando o IBM RPA On-premises](#instalando-o-ibm-rpa-on-premises)
+:small_blue_diamond: [Installing IBM RPA On-premises](#installing-ibm-rpa-on-premises)
 
-:small_blue_diamond: [Testar o acesso utilizando o comando Connectar IBM MQ](#testar-o-acesso-utilizando-o-comando-connectar-ibm-mq)
+:small_blue_diamond: [Testing access to IBM MQ](#testing-access-to-ibm-mq)
 
 
-## Pré-Requisitos
+## Prerequisites
 
-- Definir o usuário de acesso ao MQ
-	- Usuário Local no Windows
-		- Criar um novo usuario
-		- Adicionar ao grupo MQM
-	- Usuario LDAP
-		- Seguir este procedimento: https://www.ibm.com/docs/en/ibm-mq/9.2?topic=mq-creating-setting-up-windows-domain-accounts
-		- Trocar todo 'UserMQ' pelo seu usuário do LDAP
+- Define the MQ access user
+	- Local User on Windows
+		- Create a new user
+		- Add to MQM group
+	- LDAP user
+		- Follow this procedure: https://www.ibm.com/docs/en/ibm-mq/9.2?topic=mq-creating-setting-up-windows-domain-accounts
 		
-- Neste tutorial iremos utilizar uma conta local, caso utilize uma conta LDAP, informe seu usuario ao invés do UserMQ
+- In this tutorial, we will use a local account, if you use an LDAP account, inform your user instead of UserMQ
 
 |USERNAME|PASSWORD|
 | -------- |-------- |
@@ -46,40 +45,40 @@ Configuração realizada em uma VM Classic do IBM Cloud
 ![image](https://user-images.githubusercontent.com/46223364/193288830-e1fee344-58f3-45bc-a8c3-db3287ac677d.png)
 
 
-## Instalar o IBM MQ
+## Install IBM MQ
 
-Ao pesquisar o IBM Robotic Process Automation no Passaport Advantage, terá o arquivo do IBM MQ para Windows disponível para download.
+When searching for IBM Robotic Process Automation on Passport Advantage, you will have the IBM MQ file for Windows available for download.
 
-Realizar a extação dos arquivos e iniciar a instalação Tipica do IBM MQ (next, next, and finish). 
+Extract the files and start the Typical installation of IBM MQ (next, next, and finish).
 
-No final da Instalação será carregado outra janela "Prepare IBM MQ Wizard" para configurar a conta de acesso ao IBM MQ. Neste Wizard será solicitado a escolha de uma conta de usuário, local ou de LDAP.
+At the end of the installation, another "Prepare IBM MQ Wizard" window will load to configure the access account to IBM MQ. In this Wizard, you will be asked to choose a user, local, or LDAP account.
 
-- Informe 'Não' (usuario local, nosso cenário)
-- Informe 'Sim' para uma conta do LDAP, e será solicitado o dominio, usuário e senha, para ser configurado no serviço do IBM MQ
+- Enter 'No' (local user, our scenario)
+- Enter 'Yes' for an LDAP account, and you will be asked for the domain, username, and password, to be configured in the IBM MQ service
 
-Se ocorreu tudo certo com o usuário, no final será mostrado está mensagem.
+This message will be displayed at the end if everything goes well with the user.
 ![image](https://user-images.githubusercontent.com/46223364/194894688-f5884c2e-4a16-4cc0-8516-b92c761e022d.png)
 
 
-## Configurar o IBM MQ
-[PROMPT DO WINDOWS]
+## Configure IBM MQ
+<h5>[WINDOWS PROMPT]</h5>
 
-A porta padrão do IBM MQ é a 1414 no tutorial iremos utlizar a 1515.
+The default port of IBM MQ is 1414 in the tutorial we will use 1515.
 
-> **Este script está diferente do documentado
+> **This script is different from the one documented
 
 ```
 
-* Create o Queue Manager (QM)
+* Create the Queue Manager (QM)
 	crtmqm RPA.QM
 
-* Iniciar o QM
+* Start QM
 	STRMQM RPA.QM
 	
-* Acessar o Prompt do IBM MQ através do RUNMQSC
+* Access IBM MQ Prompt 
 	RUNMQSC RPA.QM
 
-* Parar os Listener
+* Stop Listeners
 	STOP LISTENER('SYSTEM.DEFAULT.LISTENER.TCP') IGNSTATE(YES)
 
 * Test Queue
@@ -89,7 +88,7 @@ A porta padrão do IBM MQ é a 1414 no tutorial iremos utlizar a 1515.
 * Use a different dead letter queue, for undeliverable messages
 	ALTER QMGR DEADQ('RPA.DEAD.LETTER.QUEUE')
 
-* Configurações de authentication
+* Authentication Settings
 	DEFINE AUTHINFO('RPA.AUTHINFO') AUTHTYPE(IDPWOS) CHCKCLNT(REQDADM) CHCKLOCL(OPTIONAL) ADOPTCTX(YES) REPLACE
 	ALTER QMGR CONNAUTH('RPA.AUTHINFO')
 	REFRESH SECURITY(*) TYPE(CONNAUTH)
@@ -97,33 +96,35 @@ A porta padrão do IBM MQ é a 1414 no tutorial iremos utlizar a 1515.
 * Create the channel
 	DEFINE CHANNEL('RPA.CHANNEL') CHLTYPE(SVRCONN) MCAUSER('UserMq') REPLACE
 
-* Configuração do método de authenticaçao do Canal
-	SET CHLAUTH('RPA.CHANNEL') TYPE(ADDRESSMAP) ADDRESS('*') USERSRC(CHANNEL) CHCKCLNT(REQUIRED) DESCR('Allows connection via APP channel') ACTION(REPLACE)
+* Channel authentication method configuration
+	SET CHLAUTH('RPA.CHANNEL') TYPE(ADDRESSMAP) ADDRESS('*') USERSRC(CHANNEL) CHCKCLNT(REQUIRED) ACTION(REPLACE)
 	ALTER QMGR CHLAUTH(DISABLED)
 
-* Ativando o listener na porta 1515
+* Enabling listener on port 1515
 	DEFINE LISTENER('RPA.LISTENER.TCP') TRPTYPE(TCP) PORT(1515) CONTROL(QMGR) REPLACE
 	START LISTENER('RPA.LISTENER.TCP') IGNSTATE(YES)
   
   	exit
 ```
 
-Atribuindo os acessos [PROMPT DO WINDOWS]
+Assigning user access 
+[WINDOWS PROMPT] 
 
 ```
-* Configurar a permissão do usuario
+* Configure user permission
 	setmqaut -m RPA.QM -t qmgr -p UserMq +connect +inq
 	setmqaut -m RPA.QM -n RPA.** -t queue -p UserMq +put +get +browse +inq +chg
 	setmqaut -m RPA.QM -n SYSTEM.DEFAULT.** -t queue -p UserMq +dsp +chg
 
-* Parar o QM
+* Stop the QM
 	ENDMQM RPA.QM
 	
-* Iniciar o QM
+* Start the QM
 	STRMQM RPA.QM
 ```
 
-Testar a fila com o Put [PROMPT DO WINDOWS] 
+Test the queue with Put
+[WINDOWS PROMPT] 
 
 ```
 
@@ -134,21 +135,21 @@ Testar a fila com o Put [PROMPT DO WINDOWS]
 	cd C:\Program Files\IBM\MQ\tools\c\Samples\Bin64
 
 	amqsputc RPA.QUEUE.1 RPA.QM
-	Informar a senha do usuario: ibmrpa2022
-  	Inserir as mensagens p colocar na fila
+	Enter user password: ibmrpa2022
+  	Enter messages to queue
   
 ```
 
 ![image](https://user-images.githubusercontent.com/46223364/193287723-83366818-db02-4a3c-a431-fe80031344b6.png)
 
 
-## Informações do MQ 
+## MQ environment information
 
-Como ficou as informações do nosso MQ
+The MQ access information
 
 |Key|Value|
 | -------- |-------- |
-|Address|srv-ibmrpa-03.ibmrpa.intra|
+|Address|FQDN - Fully Qualified Domain Name|
 |Port|1515|
 |Queue Manager|RPA.QM|
 |Channel|RPA.CHANNEL|
@@ -156,23 +157,27 @@ Como ficou as informações do nosso MQ
 |Password|ibmrpa2022|
 
 
-## Instalando o IBM RPA On-premises
+## Installing IBM RPA On-premises
 
-Realizar a instalação normalmente seguindo a documentação  
+Perform the installation normally following the documentation
 
 > https://www.ibm.com/docs/en/rpa/21.0?topic=server-install-by-using-installer
 
-Na tela de escolher o Provedor de Mensagem escolhar o IBM Message Queue
+On the screen to choose the Message Provider to choose the IBM Message Queue
 
 ![image](https://user-images.githubusercontent.com/46223364/193291905-ec9a072c-fa9f-4068-ae7d-e463821b0af2.png)
 
-Preencha com os dados do ambiente e finalize a instalação
+Fill in the environment data and finish the installation
 
 ![image](https://user-images.githubusercontent.com/46223364/193291774-f96730ac-8f38-476d-b749-cf28247fde55.png)
 
-> A instalação valida a conexão com MQ, caso não apresenta nenhuma mensagem está tudo Ok
+> The installation validates the connection with MQ, if there is no message, everything is ok
 
-## Testar o acesso utilizando o comando Connectar IBM MQ
+## Testing access to IBM MQ
+
+<h3>Connect IBM MQ command</h3>
+
+Example script
 
 ```
   defVar --name success --type Boolean
@@ -190,12 +195,13 @@ Preencha com os dados do ambiente e finalize a instalação
 ![image](https://user-images.githubusercontent.com/46223364/194963124-c6e5d8d4-4ead-4b08-ab23-fbd1e0e6c849.png)
 
 
-## Testar o acesso utilizando o Provedor Sistêmico do IBM RPA
+<h3>IBM RPA Systemic Provider</h3>
 
-Criar uma fila no Control center
+Create a queue in the Control center
 ![image](https://user-images.githubusercontent.com/46223364/193294275-dceea3af-1702-498d-9e08-46085261be2a.png)
 
-Script Model
+Example script
+
 ```
   defVar --name successConnect --type Boolean
   defVar --name conMQ --type QueueConnection
@@ -211,25 +217,25 @@ Script Model
 
 ![image](https://user-images.githubusercontent.com/46223364/193294522-e708fa9f-ef32-4baf-966d-3c8e459520aa.png)
 
-Visualização do IBM MQ Explorer
+IBM MQ Explorer
 
-> Podemos visualizar as filas criadas
+> We can visualize the queues created
 
 ![image](https://user-images.githubusercontent.com/46223364/193295168-0c367cce-0837-4abb-9954-4193d50bc166.png)
 
-Agora é realizar o teste de agendamento.
+Finally, create a simple script and do a scheduling test to test access to the machine's queue.
 
-Good Luck
+Enjoy Yourself
 
 
 ... 
 
-Caso precise consultar o log do IBM MQ, consulte o arquivo abaixo
+If you need to consult the IBM MQ log, see the file below
 
  - C:\ProgramData\IBM\MQ\qmgrs\RPA!QM\errors\AMQERR01.LOG
  
-Material de Apoio:
+Support material:
 
-- Criar uma Queue Manager	https://www.ibm.com/docs/en/ibm-mq/9.2?topic=interface-creating-queue-manager-called-qm1
-- Configurando o IBM MQ		https://www.ibm.com/docs/en/rpa/21.0?topic=server-optional-configuring-mq
+- Create a Queue Manager	https://www.ibm.com/docs/en/ibm-mq/9.2?topic=interface-creating-queue-manager-called-qm1
+- Configuring IBM MQ		https://www.ibm.com/docs/en/rpa/21.0?topic=server-optional-configuring-mq
 
