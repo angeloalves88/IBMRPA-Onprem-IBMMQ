@@ -1,10 +1,10 @@
-# Instalação do IBM RPA Onpremises utilizando o provedor de fila IBM MQ queue provider
+# Instalação do IBM RPA Onpremises utilizando o provedor de fila IBM MQ
 
 IBM Robotic Process Automation - version 21.0.5
 
 IBM Message Queue - version 9.2.5
 
-<h3>Configuração realizada em uma VM Classic do IBM Cloud</h3> 
+Configuração realizada em uma VM Classic do IBM Cloud
 
 <p align="center">
    <img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=RED&style=for-the-badge"/>
@@ -36,7 +36,7 @@ IBM Message Queue - version 9.2.5
 		- Seguir este procedimento: https://www.ibm.com/docs/en/ibm-mq/9.2?topic=mq-creating-setting-up-windows-domain-accounts
 		- Trocar todo 'UserMQ' pelo seu usuário do LDAP
 		
-- Neste tutorial iremos utilizar uma conta local, caso utilize uma conta LDAP, informe sua conta no local do UserMQ
+- Neste tutorial iremos utilizar uma conta local, caso utilize uma conta LDAP, informe seu usuario ao invés do UserMQ
 
 |USERNAME|PASSWORD|
 | -------- |-------- |
@@ -48,11 +48,11 @@ IBM Message Queue - version 9.2.5
 
 ## Instalar o IBM MQ
 
-Quando pesquisar o IBM Robotic Process Automation no Passaport Advantage, terá o arquivo do IBM MQ para Windows disponível para download.
+Ao pesquisar o IBM Robotic Process Automation no Passaport Advantage, terá o arquivo do IBM MQ para Windows disponível para download.
 
 Realizar a extação dos arquivos e iniciar a instalação Tipica do IBM MQ (next, next, and finish). 
 
-No final da Instalação será carregado outra janela "Prepare IBM MQ Wizard" para configurar a conta de acesso ao IBM MQ. Neste Wizard será solicitado a escolha de uma conta local ou de LDAP.
+No final da Instalação será carregado outra janela "Prepare IBM MQ Wizard" para configurar a conta de acesso ao IBM MQ. Neste Wizard será solicitado a escolha de uma conta de usuário, local ou de LDAP.
 
 - Informe 'Não' (usuario local, nosso cenário)
 - Informe 'Sim' para uma conta do LDAP, e será solicitado o dominio, usuário e senha, para ser configurado no serviço do IBM MQ
