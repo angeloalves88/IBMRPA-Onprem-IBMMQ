@@ -1,5 +1,4 @@
-# Installing IBM RPA On-premises 
-# using the IBM MQ queue provider
+# Installing IBM RPA On-premises <br /> using the IBM MQ queue provider
 
 IBM Robotic Process Automation - version 21.0.5
 
@@ -8,7 +7,7 @@ IBM Message Queue - version 9.2.5
 Configuration performed on an IBM Cloud Classic VM
 
 <p align="center">
-   <img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DEVELOPMENT&color=RED&style=for-the-badge"/>
+   <img src="http://img.shields.io/static/v1?label=STATUS&message=DEVELOPMENT&color=RED&style=for-the-badge"/>
  <!--  <img src="http://img.shields.io/static/v1?label=STATUS&message=CONCLUIDO&color=GREEN&style=for-the-badge"/>-->
 </p>
 
@@ -109,7 +108,7 @@ The default port of IBM MQ is 1414 in the tutorial we will use 1515.
 ```
 
 Assigning user access 
-[WINDOWS PROMPT] 
+<h5>[WINDOWS PROMPT]</h5>
 
 ```
 * Configure user permission
@@ -125,7 +124,7 @@ Assigning user access
 ```
 
 Test the queue with Put
-[WINDOWS PROMPT] 
+<h5>[WINDOWS PROMPT]</h5>
 
 ```
 
@@ -196,7 +195,7 @@ Example script
 ![image](https://user-images.githubusercontent.com/46223364/194963124-c6e5d8d4-4ead-4b08-ab23-fbd1e0e6c849.png)
 
 
-<h3>IBM RPA Systemic Provider</h3>
+<h3>System MQ Provider</h3>
 
 Create a queue in the Control center
 ![image](https://user-images.githubusercontent.com/46223364/193294275-dceea3af-1702-498d-9e08-46085261be2a.png)
