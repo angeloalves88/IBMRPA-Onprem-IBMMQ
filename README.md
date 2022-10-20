@@ -236,6 +236,10 @@ If you need to consult the IBM MQ log, see the file below
  
 Support material:
 
-- Create a Queue Manager	https://www.ibm.com/docs/en/ibm-mq/9.2?topic=interface-creating-queue-manager-called-qm1
-- Configuring IBM MQ		https://www.ibm.com/docs/en/rpa/21.0?topic=server-optional-configuring-mq
+- Configuring IBM MQ		
+	- https://www.ibm.com/docs/en/rpa/21.0?topic=server-optional-configuring-mq
+- Create a Queue Manager	
+	- https://www.ibm.com/docs/en/ibm-mq/9.2?topic=interface-creating-queue-manager-called-qm1
+- User rights required for an IBM MQ Windows service
+	- https://www.ibm.com/docs/en/ibm-mq/9.2?topic=windows-local-domain-user-accounts-mq-service#q020480___winserviceusrrgt
 
